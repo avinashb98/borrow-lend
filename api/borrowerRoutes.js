@@ -13,8 +13,18 @@ router.post('/request', (req, res, next)=> {
 router.get('/request-list', (req, res, next)=> {
   CreditRequest.find({
     borrower: req.query.id
-  }).then( (requests)=> {
-    res.send(requests);
+  }).then((requests)=> {
+
+    //send only the required fields (amount, dueDate, flag)
+    let requestList = [];
+    for(let i = 0, max = requests.length; i < max; i++) {
+      requestList.push({
+        amount: requests[i].amount,
+        dueDate: requests[i].dueDate,
+        isRepaymentDone: requests[i].isRepaymentDone
+      });
+    }
+    res.send(requestList);
   });
 })
 
