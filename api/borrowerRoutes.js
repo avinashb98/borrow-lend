@@ -12,7 +12,10 @@ router.post('/request', (req, res, next)=> {
 
 router.get('/request-list', (req, res, next)=> {
   CreditRequest.find({
-  })
+    borrower: req.query.id
+  }).then( (requests)=> {
+    res.send(requests);
+  });
 })
 
 module.exports = router;
