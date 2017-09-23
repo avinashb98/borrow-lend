@@ -1,0 +1,25 @@
+{
+  "name": "borrow-lend",
+  "version": "1.0.0",
+  "description": "Borrowing and Lending API",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avinashb98/borrowLend.git"
+  },
+  "author": "Avinash Bhardwaj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/avinashb98/borrowLend/issues"
+  },
+  "homepage": "https://github.com/avinashb98/borrowLend#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.15.4",
+    "mongoose": "^4.11.12",
+    "nodemon": "^1.12.1"
+  }
+}
