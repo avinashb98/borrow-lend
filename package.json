@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/avinashb98/borrowLend#readme",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "express": "^4.15.4",
     "mongoose": "^4.11.12",

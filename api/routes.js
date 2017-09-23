@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const Borrower = require('../models/borrower');
+const Lender = require('../models/lender');
 
 router.get('/', (req, res, next)=> {
   res.send({
@@ -9,10 +11,14 @@ router.get('/', (req, res, next)=> {
 
 router.post('/register', (req, res, next)=> {
   if(req.body.type === 'borrower') {
-    res.send("borrower registered");
+    Borrower.create(req.body).then((borrower)=>{
+        res.send(borrower);
+    }).catch(next);
   }
   if(req.body.type === 'lender') {
-    res.send("lender registered");
+    Lender.create(req.body).then((lender)=>{
+        res.send(lender);
+    }).catch(next);
   }
 })
 
