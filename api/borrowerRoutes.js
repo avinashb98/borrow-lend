@@ -10,7 +10,7 @@ router.post('/request', (req, res, next)=> {
   })
 });
 
-router.get('/request-list', (req, res, next)=> {
+router.get('/my-requests', (req, res, next)=> {
   CreditRequest.find({
     borrower: req.query.id
   }).then((requests)=> {
