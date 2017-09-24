@@ -4,9 +4,32 @@ const CreditRequest = require('../models/creditRequest');
 const Borrower = require('../models/borrower');
 const Lender = require('../models/lender');
 
-router.post('/request', (req, res, next)=> {
-  CreditRequest.create(req.body).then((creditRequest)=> {
-    res.send(creditRequest);
+router.post('/request/:id', (req, res, next)=> {
+  Borrower.findOne({_id: req.params.id}).then((borrower)=> {
+    if(borrower.creditLimit < req.body.amount) {
+      res.send({
+        error: "Request amount exceeds credit limit"
+      });
+    }
+    else {
+      Borrower.findOne({_id: req.params.id}).then((borrower)=> {
+        //update credit limit
+        let updatedCreditLimit = {
+          creditLimit: borrower.creditLimit - req.body.amount
+        };
+        Borrower.findByIdAndUpdate(
+          {_id: req.params.id},
+          updatedCreditLimit
+        ).then(()=> {
+          Borrower.findOne({_id: req.params.id}).then((borrower)=> {
+            console.log(borrower);
+          });
+        })
+      })
+      CreditRequest.create(req.body).then((creditRequest)=> {
+        res.send(creditRequest);
+      });
+    }
   })
 });
 
