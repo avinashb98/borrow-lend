@@ -1,14 +1,18 @@
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const routes = require('./api/routes');
-const borrowerRoutes = require('./api/borrowerRoutes');
-const lenderRoutes = require('./api/lenderRoutes');
+const express         = require('express');
+const app             = express();
+const bodyParser      = require('body-parser');
+const mongoose        = require('mongoose');
+const routes          = require('./api/routes');
+const borrowerRoutes  = require('./api/borrowerRoutes');
+const lenderRoutes    = require('./api/lenderRoutes');
+const config          = require('./config');
+const jwt             = require('jsonwebtoken');
 
 //Connect to mongodb
 mongoose.connect('mongodb://localhost/business');
 mongoose.Promise = global.Promise;
+
+app.set('superSecret', config.secret); //Secret Variable
 
 //Middleware
 app.use(bodyParser.json());

@@ -4,6 +4,7 @@ const router = express.Router();
 const CreditRequest = require('../models/creditRequest');
 const Borrower = require('../models/borrower');
 const Lender = require('../models/lender');
+const config = require('../config');
 
 //Post for a credit request
 router.post('/request/:id', (req, res, next)=> {

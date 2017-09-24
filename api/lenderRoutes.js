@@ -11,7 +11,21 @@ router.put('/paid/:id', (req, res, next)=> {
   CreditRequest.findByIdAndUpdate(
     {_id: req.params.id},
     {isRepaymentDone: true}
-  ).then(()=> {
+  ).then((creditRequest)=> {
+
+    //Update the credit limit
+    Borrower.findOne({_id: creditRequest.borrower}).then((borrower)=> {
+        let updatedCreditLimit = {
+          creditLimit: borrower.creditLimit + creditRequest.amount
+        }
+        console.log(updatedCreditLimit);
+        Borrower.findByIdAndUpdate(
+          {_id: creditRequest.borrower}, updatedCreditLimit
+        )
+        console.log(borrower);
+      }
+    );
+
     //Send Updated credit request
     CreditRequest.findOne(
       {_id: req.params.id}
