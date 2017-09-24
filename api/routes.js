@@ -19,7 +19,9 @@ router.post('/register', (req, res, next)=> {
   else User = Lender;
 
   User.create(req.body).then((user)=>{
-      res.send(user);
+      res.send({
+        message: "User Succesfully registered"
+      });
   }).catch(next);
 });
 
@@ -40,7 +42,7 @@ router.post('/authenticate', (req, res)=> {
     if (err) throw err;
 
     if (!user) {
-      res.json({
+      res.status(401).json({
         success: false,
         message: 'Authentication failed. User not found.'
       });
@@ -48,7 +50,7 @@ router.post('/authenticate', (req, res)=> {
       console.log(user.password+" "+req.body.password);
       // check if password matches
       if (user.password != req.body.password) {
-        res.json({
+        res.status(401).json({
           success: false,
           message: 'Authentication failed. Wrong password.'
         });

@@ -18,11 +18,9 @@ router.put('/paid/:id', (req, res, next)=> {
         let updatedCreditLimit = {
           creditLimit: borrower.creditLimit + creditRequest.amount
         }
-        console.log(updatedCreditLimit);
         Borrower.findByIdAndUpdate(
           {_id: creditRequest.borrower}, updatedCreditLimit
         )
-        console.log(borrower);
       }
     );
 
@@ -30,9 +28,12 @@ router.put('/paid/:id', (req, res, next)=> {
     CreditRequest.findOne(
       {_id: req.params.id}
     ).then((creditRequest)=> {
-      res.send(creditRequest);
+      res.send({
+        success: true,
+        message: 'The credit is paid'
+      });
     });
-  });
+  }).catch(next);
 });
 
 //Get the complete list of requests with required details
@@ -55,7 +56,7 @@ router.get('/borrower-list', (req, res, next)=> {
       });
     }
     res.send(borrowersList);
-  });
+  }).catch(next);
 });
 
 module.exports = router;

@@ -11,7 +11,7 @@ router.post('/request/:id', (req, res, next)=> {
   //Finding the borrower corresponding to the id
   Borrower.findOne({_id: req.params.id}).then((borrower)=> {
     if(borrower.creditLimit < req.body.amount) {
-      res.send({
+      res.status(422).send({
         error: "Request amount exceeds credit limit"
       });
     }
@@ -33,7 +33,10 @@ router.post('/request/:id', (req, res, next)=> {
       })
       //Create a credit request if the limit is more than the request
       CreditRequest.create(req.body).then((creditRequest)=> {
-        res.send(creditRequest);
+        res.send({
+          succes: true,
+          message: 'Succesfully Requested for credit'
+        });
       });
     }
   })
