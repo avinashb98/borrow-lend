@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
+//Import collections
 const CreditRequest = require('../models/creditRequest');
 const Borrower = require('../models/borrower');
 const Lender = require('../models/lender');
 
+//Post for a credit request
 router.post('/request/:id', (req, res, next)=> {
+  //Finding the borrower corresponding to the id
   Borrower.findOne({_id: req.params.id}).then((borrower)=> {
     if(borrower.creditLimit < req.body.amount) {
       res.send({
@@ -17,6 +20,7 @@ router.post('/request/:id', (req, res, next)=> {
         let updatedCreditLimit = {
           creditLimit: borrower.creditLimit - req.body.amount
         };
+        //update the credit limit of the borrower
         Borrower.findByIdAndUpdate(
           {_id: req.params.id},
           updatedCreditLimit
@@ -26,6 +30,7 @@ router.post('/request/:id', (req, res, next)=> {
           });
         })
       })
+      //Create a credit request if the limit is more than the request
       CreditRequest.create(req.body).then((creditRequest)=> {
         res.send(creditRequest);
       });
@@ -33,6 +38,7 @@ router.post('/request/:id', (req, res, next)=> {
   })
 });
 
+//Get the list of all the requests made by the borrower
 router.get('/my-requests', (req, res, next)=> {
   CreditRequest.find({
     borrower: req.query.id

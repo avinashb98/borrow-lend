@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
+
+//Collections
 const Borrower = require('../models/borrower');
 const Lender = require('../models/lender');
 const CreditRequest = require('../models/creditRequest');
 
+//Set the repayment flag to true
 router.put('/paid/:id', (req, res, next)=> {
   CreditRequest.findByIdAndUpdate(
     {_id: req.params.id},
@@ -18,12 +21,14 @@ router.put('/paid/:id', (req, res, next)=> {
   });
 });
 
+//Get the complete list of requests with required details
 router.get('/request-list', (req, res, next)=> {
   CreditRequest.find({}).then((requests)=> {
     res.send(requests);
   });
 });
 
+//Get the list of borrowers with required details
 router.get('/borrower-list', (req, res, next)=> {
   Borrower.find({}).then((borrowers)=> {
     //send required details
