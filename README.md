@@ -92,7 +92,11 @@ API for Borrowing and Lending
           success: false,
           message: 'Authentication failed. User not found.'
         }`
-    
+
+**Token is required for all requests that follow**
+----
+    The token may be sent after authenticated via the request header, request body or url queries
+
 **Credit Request**
 ----
   Post for a credit request by borrower
